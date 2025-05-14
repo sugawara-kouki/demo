@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{layout/default :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>ユーザー一覧</title>
+</head>
+<body>
+    <section>
+        <div class="container mt-4">
+            <h1>ユーザー一覧</h1>
+            
+            <a th:href="@{/users/create}" class="btn btn-primary mb-3">新規ユーザー作成</a>
+            
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                        <th>メールアドレス</th>
+                        <th>作成日時</th>
+                        <th>アクション</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${#temporals.format(user.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning">編集</a>
+                            <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger"
+                               onclick="return confirm('本当に削除しますか？')">削除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>
